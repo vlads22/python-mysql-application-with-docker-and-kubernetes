@@ -1,0 +1,5 @@
+FROM mysql:latest
+
+ENV MYSQL_ROOT_PASSWORD=Yda#oo458
+
+COPY 
