@@ -1,0 +1,33 @@
+# the service of the db. 
+# Considerations to take into account:
+# On the local computer, the local MySQL80 service is using port 3306 port. Does this influence the port value we choose in the mysql yaml files? The local MySQL service using port 3306 can potentially conflict with the port configuration in the MySQL YAML files for Kubernetes.
+# The python script creates a log file. How do we change the mysql and python yaml files so that we use a Persisten Volume with which the log file is saved on the local computer?
+
+# the service configuration
+# search k8 docs for service
+# this is the end point of the db. this service needs to forward the request it gets to the serviced pod
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+#   labels:
+#     app: mysql-app
+spec:
+  # by default this service is internal service, to make it external (app accesible from by external person through browser). default for internal is type: ClusterIP
+  # nodeport is external service type
+  # type: ClusterIP
+  selector: 
+    # this must match the label of the template app: in the deployment so that the service know what pod to service
+    app: mysql
+  # service is reachable in the cluster usiing it s own ip and port
+  ports:
+    - protocol: TCP
+      # the service's port, the port number which is exposed by the service and on which other pods in the cluster will communicate with this service.
+      # tried with 3307 and did not work
+      port: 3306
+      # the port of the pod that the service services
+      # tried with 3307 and did not work
+      targetPort: 3306
+      # port for external service. this port will open on k8 nodes on which the app is. in k8 is between 30000-32767. search k8 docs for nodeport
+      # nodePort: 30100
+

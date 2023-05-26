@@ -1,0 +1,17 @@
+# this file represents the Persistent Volume Claim (PVC) definition.
+# the PersistentVolumeClaim (PVC) is a request for storage by a user that can be fulfilled by a PV. PersistentVolumes and PersistentVolumeClaims are independent from Pod lifecycles and preserve data through restarting, rescheduling, and even deleting Pods.
+# https://kubernetes.io/docs/concepts/storage/persistent-volumes/#persistentvolumeclaims
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: log-pvc
+spec:
+  # must be the same as that of the PV. 
+  storageClassName: local-storage
+  # Claims can request specific size and access modes
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi

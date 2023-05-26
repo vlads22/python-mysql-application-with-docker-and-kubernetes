@@ -1,0 +1,78 @@
+# """ Objective 1: Our files are: mysql_secret.yaml (secret credentials), 
+# mysql-deployment.yaml and mysql-service.yaml (deployment and service for a mysql database), python-app-deployment.yaml (python script that queries the database)
+# """
+# """ Objective 2:
+# We have a Docker image called image_hardware_app_python which contains a python script that queries a mysql database called Hardware.
+# We have a Docker image called image_hardware_app_mysql which contains the Hardware mysql database.
+# In a Ubuntu22 terminal we have run the command `minikube start --driver=docker`.
+# The question is how do we use minikube to deploy these two applications on kubernetes and let them communicate with eachother?
+# """
+# config file for the deployment and optionally also service of the db. u can have separate for deploy and service but is common to be one because all deployments need service
+# search k8 docs for deployment
+# deploy application on k8s = tell the control plane to start the application containers / to run them on the cluster's nodes.
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql-deployment
+  # in k8 u can label any component. aditional identifiers as a plus to name which should be meaningful
+  # labels:
+  #   app: mysql-app
+
+spec:
+  # replicas: how many pods u want to create
+  replicas: 1
+  selector:
+    # matchlabels used to identify the pods as belonging to the same deployment. so all the pods with this matchlabel belong to the deployment named mongo-deployment
+    matchLabels:
+      app: mysql
+  # template is a configuration/blueprint for the pods within the configuration for deployment which is the entire file
+  template:
+    metadata:
+      # like each pod will be given a unique name but they will share the same label. so we can identify all the pod replicas of the same application
+      # for all labels u can use key value like myapp:nginx but practice is to use app:value
+      labels:
+        app: mysql
+    # the definition of the container. because u can have multiple containers in a pod
+    spec:
+      containers:
+      # any name u want for the container
+      - name: mysql
+        # which image will be used the create the container. mongo:5.0 taken from docker hub tags like for a dockerfile  
+        # we basicaly tell it to create pods with using the image mongo:5.0
+        # for a value such as image_hardware_app_python:latest, they are assumed to be available locally on the system where you are running the kubectl commands.
+        image: docker.io/library/image_hardware_app_mysql:latest
+        #image: docker.io/library/hardware_app_mysql_minikube:latest
+        # Any other value than Never does not work with minikube and local images. Never = the kubelet does not try fetching the image. If the image is somehow already present locally, the kubelet attempts to start the container; otherwise, startup fails. 
+        # If you want to rely on pre-pulled images as a substitute for registry authentication, you must ensure all nodes in the cluster have the same pre-pulled images.
+        imagePullPolicy: Never
+        ports:
+          # the port the container listens on. u find the value of the port on dockerhub tags tab, in the image details. MySQL is running on port 3306 inside the pod. tried with 3307 and did not work
+          - containerPort: 3306
+        # u get this info from the mongo db docker hub page. configure the env variables. when the container start, the root user with these credentials will be created
+        env:
+          # key value
+        # - name: MONGO_INITDB_ROOT_USERNAME
+        #   valueFrom:
+        #     secretKeyRef:
+        #       name: mongo-secret
+        #       key: mongo-user
+        - name: MYSQL_ROOT_PASSWORD
+          #value: abc123
+          #value: <your password>
+          valueFrom:
+            secretKeyRef:
+              name: mysql-pass
+              key: password
+        - name: MYSQL_DATABASE
+          value: hardware
+          # valueFrom:
+          #   secretKeyRef:
+          #     name: database-secret
+          #     key: mysql-password
+
+
+# separation between configurations
+#---
+

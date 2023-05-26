@@ -1,0 +1,18 @@
+# with this file, we Create a Persistent Volume (PV) definition so that we can save the log file of the python script on the local machine.
+# A PersistentVolume (PV) is a piece of storage in the cluster that has been manually provisioned by an administrator.
+
+apiVersion: v1
+kind: PersistentVolume
+metadata: 
+  name: log-pv
+spec:
+  # A PV with no storageClassName has no class and can only be bound to PVCs that request no particular class.
+  storageClassName: local-storage
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  # when you're using minikube with the docker driver (minikube start --driver=docker), the path bellow IS NOT your local file system, it's in the minikube container. in order to access
+  # the location, you need to exec into the minikube container.
+  hostPath:
+    path: /mnt/c/vlad/python

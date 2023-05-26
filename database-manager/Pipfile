@@ -4,6 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+typed-config = "*"
+python-dotenv = "*"
+mysqlclient = "*"
+pandas = "*"
+openpyxl = "*"
 
 [dev-packages]
 

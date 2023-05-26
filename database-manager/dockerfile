@@ -1,0 +1,13 @@
+FROM python:latest
+
+# with k8s, when u exec into the python pod, with  -- /bin/bash , u the main.py and all other files in the folder are in /usr/app/src
+WORKDIR /usr/app/src
+
+# take all files located in the current dir and copy them into the image
+COPY . .
+
+# install modules into the image
+RUN pip install -r requirements.txt
+
+# executed when a container is run based on this image
+CMD ["python", "main.py"]

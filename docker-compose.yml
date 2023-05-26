@@ -1,0 +1,52 @@
+#
+version: '3'
+
+services:
+  database_manager:
+    image: image_hardware_app_python
+    volumes:
+      # option 1 - named volume
+      # <volume name>:<path on container>. equivalent of docker run -v name:/var/lib/mysql/data. in this case we dont need to set also the path from local machine because that is set already when we create the volume and we find it by running `docker volume inspect <volume name>`
+      # after you do docker-compose and the file is saved, you can use a priviliged shell to cd into the local folder of the volume and check the result
+      - hardware-app-volume:/usr/app/src
+      # option 2  - unnamed volume, also called bind mount. ( using a host directory to mount to a directory inside the container is called a bind mount. Bind mounts do not create a named volume, but rather mount a host directory or file to a container directory.)
+      # <path on local machine>:<path from container>
+      # <path from container> - if in dockerfile you have WORKDIR /usr/app/src , then here u can use /usr/app/src
+      #- /mnt/c/vlad/python/hardware-app/database_manager:/usr/app/src
+    container_name: container_hardware_app_database_manager
+    # where is the dockerfile for this service
+    build: ./database_manager/
+    depends_on:
+      - database_sql
+    # "8080:8080"is mapping port8080in the container to port8080on the host machine. The first8080refers to the port number inside the container, and the second8080` refers to the port number on the host machine. This means that any traffic sent to localhost:8080 on the host machine will be forwarded to port 8080 inside the container. By default, Docker containers run in an isolated network namespace, so the ports exposed by containers are not accessible from the host machine or other containers unless they are explicitly mapped in the docker-compose.yml file using the ports section.     
+    # ports:
+    #   - "8080:8080"
+
+  database_sql:
+    image: image_hardware_app_mysql
+    container_name: container_hardware_app_database
+    #build: ./database_sql/
+    #restart: always
+    # env variables: https://docs.docker.com/compose/environment-variables/set-environment-variables/
+    # option1 for seting the environment variables
+    env_file:
+      - hardware_app.env
+    # option2 for seting the environment variables. set the environment variables of a service’s containers 
+    # environment:
+    #   MYSQL_DATABASE: 'root'
+    #   #MYSQL_ROOT_PASSWORD: 'Abc1234'
+    #   MYSQL_ROOT_PASSWORD: '<your password>'
+    #   # in order to be able to use "3307:3306" in the ports section bellow u must set MYSQL_TCP_PORT: 3307
+    #   MYSQL_TCP_PORT: 3307
+    # when a docker image is created, it is made with its own ports. However, these are independent of the ports held on your computer. Therefore, we need to specify a way for our computer to communicate with the docker image. To do this, we set up the ports variable, which is akin to port-forwarding.
+    # the first value before : is the port on the local host computer, the second value after : is the port of the image. So, if I set 3307:3306, so that my application is to post to port 3307, my host computer will redirect that traffic to port 3306 of the MySQL docker image. I could have left this to be something like 3306:3306; however, if you had a local instance MySQL running on your host computer using the default port, then there will be a clash and you’ll face some communication issues.
+    # so if you set the first value to 3306 u will have to stop local mysql service from services.msc
+    ports:
+      - "3307:3306"
+
+# section only needed if we use named volumes above
+volumes:
+  # here we define the list of volume that we want to mount to the containers = that we want to link using path on container:path on local and the two paths will be replicated
+  hardware-app-volume:
+    # If set to true, external specifies that this volume already exist on the host machine and its lifecycle is managed outside of that of the application. Compose implementations MUST NOT attempt to create these volumes, and MUST return an error if they do not exist.
+    external: true
