@@ -1,8 +1,10 @@
-# hardware-app
+# Python and MySQL containerized application
+
 ## Project objective
-In the database_sql folder we have a sql file with a mysql database. In the database_manager folder we have a main.py file with a python script which makes a query to the database.
-For part 1 of the study, we want to write the docker-compose file so that we create a container with the python script, a container with the mysql database and the python script makes a query to the database container.
-For part 2 of the study, instead of Docker Compose we want to write use Minikube and yaml configuration files to deploy our two apps.
+The project is a study on how to run a simple application using containers. The app has two components, a Python script and a MySQL database. In order to run the app, we will use two options: first Docker Compose and second Minikube.
+In the database_sql folder we have a SQL file with a MySQL database. In the database_manager folder we have a main.py file with a Python script which makes a query to the database.
+For part 1 of the study, we want to write a Docker-compose file so that we create a container with the Python script, a container with the MySQL database and the Python script makes a query to the database container.
+For part 2 of the study, instead of Docker Compose we want to use Minikube and yaml configuration files to deploy our two apps.
 
 ## Instalation and Testing
 
