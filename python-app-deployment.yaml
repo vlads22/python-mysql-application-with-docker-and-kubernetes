@@ -30,9 +30,9 @@ spec:
       containers:
       - name: python-app
         # name of the image that we re using to create the container. after building the image with docker, the image has to be uploaded to minikube
-        image: docker.io/library/image_hardware_app_python:latest
+        image: docker.io/library/image_mov_app_python:latest
         # <docker hub username>/<image name>
-        #image: vcr131/image_hardware_app_python:latest  
+        #image: vcr131/image_mov_app_python:latest  
         # Never is image is local. 
         imagePullPolicy: IfNotPresent
         # mounts the volume at the path /app/logs inside the container.
@@ -51,7 +51,7 @@ spec:
         - name: DB_PORT
           value: "3307"
         - name: DB_NAME
-          value: hardware
+          value: mov
         # - name: USER_NAME
         #   valueFrom:
         #     secretKeyRef:

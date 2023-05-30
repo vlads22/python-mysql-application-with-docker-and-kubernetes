@@ -3,17 +3,17 @@ version: '3'
 
 services:
   database_manager:
-    image: image_hardware_app_python
+    image: image_mov_app_python
     volumes:
       # option 1 - named volume
       # <volume name>:<path on container>. equivalent of docker run -v name:/var/lib/mysql/data. in this case we dont need to set also the path from local machine because that is set already when we create the volume and we find it by running `docker volume inspect <volume name>`
       # after you do docker-compose and the file is saved, you can use a priviliged shell to cd into the local folder of the volume and check the result
-      - hardware-app-volume:/usr/app/src
+      - mov-app-volume:/usr/app/src
       # option 2  - unnamed volume, also called bind mount. ( using a host directory to mount to a directory inside the container is called a bind mount. Bind mounts do not create a named volume, but rather mount a host directory or file to a container directory.)
       # <path on local machine>:<path from container>
       # <path from container> - if in dockerfile you have WORKDIR /usr/app/src , then here u can use /usr/app/src
-      #- /mnt/c/vlad/python/hardware-app/database_manager:/usr/app/src
-    container_name: container_hardware_app_database_manager
+      #- /mnt/c/vlad/python/movie-app/database_manager:/usr/app/src
+    container_name: container_mov_app_database_manager
     # where is the dockerfile for this service
     build: ./database_manager/
     depends_on:
@@ -23,14 +23,14 @@ services:
     #   - "8080:8080"
 
   database_sql:
-    image: image_hardware_app_mysql
-    container_name: container_hardware_app_database
+    image: image_mov_app_mysql
+    container_name: container_mov_app_database
     #build: ./database_sql/
     #restart: always
     # env variables: https://docs.docker.com/compose/environment-variables/set-environment-variables/
     # option1 for seting the environment variables
     env_file:
-      - hardware_app.env
+      - movie_app.env
     # option2 for seting the environment variables. set the environment variables of a service’s containers 
     # environment:
     #   MYSQL_DATABASE: 'root'
@@ -47,6 +47,6 @@ services:
 # section only needed if we use named volumes above
 volumes:
   # here we define the list of volume that we want to mount to the containers = that we want to link using path on container:path on local and the two paths will be replicated
-  hardware-app-volume:
+  mov-app-volume:
     # If set to true, external specifies that this volume already exist on the host machine and its lifecycle is managed outside of that of the application. Compose implementations MUST NOT attempt to create these volumes, and MUST return an error if they do not exist.
     external: true

@@ -42,7 +42,7 @@ spec:
         # which image will be used the create the container. mongo:5.0 taken from docker hub tags like for a dockerfile  
         # we basicaly tell it to create pods with using the image mongo:5.0
         # for a value such as image_hardware_app_python:latest, they are assumed to be available locally on the system where you are running the kubectl commands.
-        image: docker.io/library/image_hardware_app_mysql:latest
+        image: docker.io/library/image_mov_app_mysql:latest
         #image: docker.io/library/hardware_app_mysql_minikube:latest
         # Any other value than Never does not work with minikube and local images. Never = the kubelet does not try fetching the image. If the image is somehow already present locally, the kubelet attempts to start the container; otherwise, startup fails. 
         # If you want to rely on pre-pulled images as a substitute for registry authentication, you must ensure all nodes in the cluster have the same pre-pulled images.
@@ -66,7 +66,7 @@ spec:
               name: mysql-pass
               key: password
         - name: MYSQL_DATABASE
-          value: hardware
+          value: mov
           # valueFrom:
           #   secretKeyRef:
           #     name: database-secret

@@ -3,4 +3,4 @@ FROM mysql:latest
 # MySQL will not start without this because it requires this environment variable for setting the password of the root user upon initialization
 ENV MYSQL_ROOT_PASSWORD=<yourpassword>
 
-COPY ./hardware_type_w_create.sql /docker-entrypoint-initdb.d/
+COPY ./mov_type_w_create.sql /docker-entrypoint-initdb.d/

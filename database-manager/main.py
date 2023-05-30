@@ -14,10 +14,10 @@ def main(config):
     logging.config.fileConfig(config.APP.LOGGING_CONFIG)
     logging.info("Database manager starting.")
 
-    db_connection_hardware = establish_db_connection(config=config)
+    db_mov = establish_db_connection(config=config)
 
-    query_type = db_connection_hardware.execute(query.type_get_name)
-    logging.info(query_type)  # [['laptop'], ['monitor'], ['dockstation']]
+    query_type = db_mov.execute(query.type_get_name)
+    logging.info(query_type)  # [['drama'], ['comedy'], ['documentary']]
 
 
     # save list locally as excel

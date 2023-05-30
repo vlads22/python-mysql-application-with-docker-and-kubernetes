@@ -30,10 +30,10 @@ def establish_db_connection(config):
     i = 1
     while i < 10:
         try:
-            logging.info("config.DB_HARDWARE.PASSWORD: %s", config.DB_HARDWARE.PASSWORD) 
-            logging.info("config.DB_HARDWARE_PORT: %s", config.DB_HARDWARE.PORT) 
-            db_connection_hardware = MySQL(host=config.DB_HARDWARE.HOST, port=config.DB_HARDWARE.PORT,
-                                user=config.DB_HARDWARE.USER, passwd=config.DB_HARDWARE.PASSWORD, database=config.DB_HARDWARE.DATABASE)
+            logging.info("config.DB PASSWORD: %s", config.DB_MOVIE.PASSWORD) 
+            logging.info("config.DB PORT: %s", config.DB_MOVIE.PORT) 
+            db_connection_hardware = MySQL(host=config.DB_MOVIE.HOST, port=config.DB_MOVIE.PORT,
+                                user=config.DB_MOVIE.USER, passwd=config.DB_MOVIE.PASSWORD, database=config.DB_MOVIE.DATABASE)
             logging.info("DB connection succeeded.")
             break
         except Exception as e:

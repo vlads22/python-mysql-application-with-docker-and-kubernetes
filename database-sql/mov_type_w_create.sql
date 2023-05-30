@@ -1,8 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `hardware` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
-USE `hardware`;
+CREATE DATABASE  IF NOT EXISTS `mov` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `mov`;
 -- MySQL dump 10.13  Distrib 8.0.32, for Win64 (x86_64)
 --
--- Host: localhost    Database: hardware
+-- Host: localhost    Database: mov
 -- ------------------------------------------------------
 -- Server version	8.0.32
 
@@ -38,7 +38,7 @@ CREATE TABLE `type` (
 
 LOCK TABLES `type` WRITE;
 /*!40000 ALTER TABLE `type` DISABLE KEYS */;
-INSERT INTO `type` VALUES (1,'laptop','april'),(2,'monitor','september'),(3,'dockstation','june');
+INSERT INTO `type` VALUES (1,'drama','april'),(2,'comedy','september'),(3,'documentary','june');
 /*!40000 ALTER TABLE `type` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-05-07 13:35:09
+-- Dump completed on 2023-05-30 19:23:39

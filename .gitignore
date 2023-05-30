@@ -3,14 +3,14 @@ database-sql/.env
 .vscode/
 
 database-manager/.env
-database-manager/env_hardware_app_docker_compose.env
-database-manager/env_hardware_app_k8s.env
-database-manager/env_hardware_app_local_db.env
-database-manager/env_hardware_app_ubuntu.env
+database-manager/env_movie_app_docker_compose.env
+database-manager/env_movie_app_k8s.env
+database-manager/env_movie_app_local_db.env
+database-manager/env_movie_app_ubuntu.env
 
 database-manager/__pycache__
 /database-manager/__pycache__/
-hardware_app.env
+movie_app.env
 mysql-secret.yaml
 
 /database-sql/dockerfile*
