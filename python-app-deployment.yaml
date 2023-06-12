@@ -1,13 +1,16 @@
 # because we are talking to the api server of the control plane which controls the nodes. can be done through yaml or json files
 # this file is the deployment and service of the web app aplication
 # deployment configuration:
+
+# defines the API server endpoint that manages the object we deploy.
 apiVersion: apps/v1
 
 # the deployment is the 1st part of the configuration file. it is a kubernetes configuration file
+# kind key defines the workload this deployment creates.
 # deployment = template for creatin pods
 kind: Deployment
 metadata:
-  # name of the component
+  # name of the deployment
   name: python-app-deployment
   # labels:
   #   app: python_app
@@ -15,6 +18,7 @@ spec:
   # create 1 replica pods called webapp with each replica having a container based on the image named nanajanashia/k8s-demo-app:v1.0
   replicas: 1
   selector:
+    # labels enable the system to query the cluster for objects that match a label with a specific name. Deployments make use of a label to find and group pods.
     matchLabels:
       app: python-app
   template:
